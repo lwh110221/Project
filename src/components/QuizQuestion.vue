@@ -89,7 +89,7 @@
             </button>
             <button 
               @click="showConfirmSubmit = true"
-              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
+              class="px-1 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
             >
               交卷
             </button>
