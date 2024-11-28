@@ -19,9 +19,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install -D vue-tsc@^1.8.27
+
+      - name: Type Check
+        run: vue-tsc --noEmit
 
       - name: Build
         run: npm run build
