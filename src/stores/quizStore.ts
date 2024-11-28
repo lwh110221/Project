@@ -6,9 +6,9 @@ export const useQuizStore = defineStore('quiz', {
     currentQuizBank: null as QuizBank | null,
     currentQuestionIndex: 0,
     userAnswers: new Map<number, string | string[]>(),
+    markedQuestions: new Set<number>(),
     score: 0,
-    isComplete: false,
-    maxProgress: 0
+    isComplete: false
   }),
 
   actions: {
@@ -18,7 +18,6 @@ export const useQuizStore = defineStore('quiz', {
       this.userAnswers.clear();
       this.score = 0;
       this.isComplete = false;
-      this.maxProgress = 0;
     },
 
     submitAnswer(answer: string | string[]) {
@@ -47,8 +46,6 @@ export const useQuizStore = defineStore('quiz', {
       
       if (this.currentQuestionIndex < this.currentQuizBank.questions.length - 1) {
         this.currentQuestionIndex++;
-        const currentProgress = (this.currentQuestionIndex / this.currentQuizBank.questions.length) * 100;
-        this.maxProgress = Math.max(this.maxProgress, currentProgress);
       } else {
         this.isComplete = true;
       }
@@ -58,13 +55,43 @@ export const useQuizStore = defineStore('quiz', {
       if (this.currentQuestionIndex > 0) {
         this.currentQuestionIndex--;
       }
+    },
+
+    toggleMarkQuestion(index: number) {
+      if (this.markedQuestions.has(index)) {
+        this.markedQuestions.delete(index);
+      } else {
+        this.markedQuestions.add(index);
+      }
+    },
+
+    jumpToQuestion(index: number) {
+      if (index >= 0 && this.currentQuizBank && index < this.currentQuizBank.questions.length) {
+        this.currentQuestionIndex = index;
+      }
     }
   },
 
   getters: {
     progress: (state): number => {
       if (!state.currentQuizBank) return 0;
-      return state.maxProgress;
+      const answeredCount = state.userAnswers.size;
+      return Math.round((answeredCount / state.currentQuizBank.questions.length) * 100);
+    },
+
+    isAnswerCorrect: (state) => (index: number): boolean => {
+      const answer = state.userAnswers.get(index);
+      const question = state.currentQuizBank?.questions[index];
+      
+      if (!answer || !question) return false;
+      
+      if (Array.isArray(answer) && Array.isArray(question.answer)) {
+        const sortedAnswer = [...answer].sort().join('');
+        const sortedCorrect = [...question.answer].sort().join('');
+        return sortedAnswer === sortedCorrect;
+      }
+      
+      return answer === question.answer;
     }
   }
 });
