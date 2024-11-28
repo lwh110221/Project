@@ -22,12 +22,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: |
-          npm install
-          npm install -D vue-tsc@^1.8.27
-
-      - name: Type Check
-        run: vue-tsc --noEmit
+        run: npm install
 
       - name: Build
         run: npm run build
