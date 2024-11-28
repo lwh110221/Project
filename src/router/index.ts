@@ -4,7 +4,7 @@ import QuizQuestion from '../components/QuizQuestion.vue';
 import QuizResult from '../components/QuizResult.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
