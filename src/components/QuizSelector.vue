@@ -5,11 +5,11 @@
       <div
         v-for="bank in quizBanks"
         :key="bank.title"
-        class="border rounded-lg p-4 cursor-pointer hover:bg-gray-100"
+        class="border rounded-lg p-4 cursor-pointer bg-gray-300 hover:bg-green-200"
         @click="selectQuizBank(bank)"
       >
         <h2 class="text-xl font-semibold">{{ bank.title }}</h2>
-        <p class="text-gray-600">题目数量: {{ bank.questions.length }}</p>
+        <p class="text-gray-600">题数: {{ bank.questions.length }}</p>
       </div>
     </div>
   </div>

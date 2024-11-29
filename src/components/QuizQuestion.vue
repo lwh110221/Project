@@ -1,12 +1,12 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="mb-6 bg-white rounded-xl shadow-sm p-6">
+    <div class="mb-1 bg-white rounded-xl shadow-sm p-3">
       <div class="relative">
         <div class="flex mb-2 items-center justify-between">
           <span class="text-sm font-medium text-blue-600">做题进度</span>
           <span class="text-sm font-medium text-blue-600">{{ Math.round(progress) }}%</span>
         </div>
-        <div class="h-2 bg-blue-100 rounded-full">
+        <div class="h-3 bg-blue-100 rounded-full">
           <div 
             class="h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"
             :style="{ width: `${progress}%` }"
@@ -23,6 +23,11 @@
       <div class="p-4">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-bold">题目导航</h3>
+          <button 
+              @click="showConfirmSubmit = true"
+              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
+            >交卷
+          </button>
           <button @click="showNav = false" class="text-gray-500 hover:text-gray-700">
             <span class="sr-only">关闭</span>
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,12 +92,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <button 
-              @click="showConfirmSubmit = true"
-              class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
-            >
-              交卷
-            </button>
           </div>
         </div>
         
@@ -147,7 +146,7 @@
 
           <button
             @click="nextQuestion"
-            :disabled="currentQuestionIndex === totalQuestions - 1"
+            :disabled="!isLastQuestion && !hasSelectedAnswer"
             class="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ isLastQuestion ? '完成' : '下一题' }}
@@ -248,7 +247,9 @@ const confirmMultipleAnswer = () => {
 };
 
 const nextQuestion = () => {
-  if (currentQuestionIndex.value < totalQuestions.value - 1) {
+  if (isLastQuestion.value) {
+    showConfirmSubmit.value = true;
+  } else if (currentQuestionIndex.value < totalQuestions.value - 1) {
     quizStore.nextQuestion();
   }
 };
