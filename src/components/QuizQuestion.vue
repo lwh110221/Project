@@ -1,12 +1,12 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div class="mb-1 bg-white rounded-xl shadow-sm p-3">
+    <div class="mb-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-3">
       <div class="relative">
         <div class="flex mb-2 items-center justify-between">
-          <span class="text-sm font-medium text-blue-600">做题进度</span>
-          <span class="text-sm font-medium text-blue-600">{{ Math.round(progress) }}%</span>
+          <span class="text-sm font-medium text-blue-600 dark:text-blue-400">做题进度</span>
+          <span class="text-sm font-medium text-blue-600 dark:text-blue-400">{{ Math.round(progress) }}%</span>
         </div>
-        <div class="h-3 bg-blue-100 rounded-full">
+        <div class="h-3 bg-blue-100 dark:bg-blue-900 rounded-full">
           <div 
             class="h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"
             :style="{ width: `${progress}%` }"
@@ -16,19 +16,18 @@
     </div>
 
     <div 
-      class="fixed right-0 top-0 h-full bg-white shadow-lg transform transition-transform duration-300"
+      class="fixed right-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300"
       :class="showNav ? 'translate-x-0' : 'translate-x-full'"
       style="width: 300px;"
     >
       <div class="p-4">
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold">题目导航</h3>
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white">题目导航</h3>
           <button 
-              @click="showConfirmSubmit = true"
-              class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-2 py-1 rounded text-white text-sm font-semibold shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] hover:shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-10px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] focus:shadow-[inset_-12px_-8px_40px_#46464620] transition-shadow"
-            >交卷
-          </button>
-          <button @click="showNav = false" class="text-gray-500 hover:text-gray-700">
+            @click="showConfirmSubmit = true"
+            class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-2 py-1 rounded text-white text-sm font-semibold shadow-md hover:opacity-90"
+          >交卷</button>
+          <button @click="showNav = false" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
             <span class="sr-only">关闭</span>
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -43,7 +42,7 @@
             @click="jumpToQuestion(index-1)"
             class="w-10 h-10 rounded-lg flex items-center justify-center relative"
             :class="[
-              currentQuestionIndex === index-1 ? 'bg-blue-600 text-white' : 'bg-gray-100',
+              currentQuestionIndex === index-1 ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-700 dark:text-gray-200',
               quizStore.userAnswers.has(index-1) && quizStore.isAnswerCorrect(index-1) ? 'border-2 border-green-500' : '',
               quizStore.userAnswers.has(index-1) && !quizStore.isAnswerCorrect(index-1) ? 'border-2 border-red-500' : ''
             ]"
@@ -58,44 +57,39 @@
       </div>
     </div>
 
-    <div v-if="currentQuestion" class="bg-white rounded-xl shadow-lg min-h-[600px] flex flex-col">
+    <div v-if="currentQuestion" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg min-h-[600px] flex flex-col">
       <div class="flex-1 p-8 overflow-y-auto">
         <div class="flex justify-between items-center mb-6">
           <div class="flex items-center gap-4">
-            <h2 class="text-xl font-bold text-gray-800">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white">
               第 {{ currentQuestionIndex + 1 }} 题
             </h2>
             <button 
               @click="toggleMark"
-              class="p-2 rounded-full hover:bg-gray-100"
-              :class="{ 'text-red-500': isMarked }"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+              :class="{ 'text-red-500 dark:text-red-400': isMarked }"
             >
               <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path 
-                  stroke-linecap="round" 
-                  stroke-linejoin="round" 
-                  stroke-width="2" 
-                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
               </svg>
             </button>
           </div>
           <div class="flex items-center gap-4">
-            <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">
+            <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full text-sm">
               {{ currentQuestionIndex + 1 }} / {{ totalQuestions }}
             </span>
             <button 
               @click="showNav = true"
-              class="p-2 rounded-full hover:bg-gray-100"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
         </div>
         
-        <p class="text-lg mb-8 text-gray-700">{{ currentQuestion.content }}</p>
+        <p class="text-lg mb-8 text-gray-700 dark:text-gray-200">{{ currentQuestion.content }}</p>
 
         <div class="space-y-4">
           <template v-if="currentQuestion.type === 'single' || currentQuestion.type === 'boolean'">
@@ -124,13 +118,15 @@
         </div>
       </div>
 
-      <div class="border-t border-gray-100 p-6 bg-white rounded-b-xl">
+      <div class="border-t border-gray-100 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 rounded-b-xl">
         <div class="flex justify-between items-center max-w-2xl mx-auto">
           <button
             @click="previousQuestion"
             :disabled="currentQuestionIndex === 0"
             class="px-6 py-2 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            :class="currentQuestionIndex === 0 ? 'bg-gray-100 text-gray-400' : 'bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50'"
+            :class="currentQuestionIndex === 0 
+              ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500' 
+              : 'bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/50'"
           >
             上一题
           </button>
@@ -146,8 +142,7 @@
 
           <button
             @click="nextQuestion"
-            :disabled="!isLastQuestion && !hasSelectedAnswer"
-            class="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:opacity-90 transition-all duration-200"
           >
             {{ isLastQuestion ? '完成' : '下一题' }}
           </button>
@@ -159,19 +154,19 @@
       v-if="showConfirmSubmit"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     >
-      <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-        <h3 class="text-lg font-bold mb-4">确认交卷</h3>
-        <p class="text-gray-600 mb-6">确定要交卷吗？请确认所有题目都已完成。</p>
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-white">确认交卷</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">确定要交卷吗？请确认所有题目都已完成。</p>
         <div class="flex justify-end gap-4">
           <button
             @click="showConfirmSubmit = false"
-            class="bg-gray-500 px-4 py-2 text-white hover:bg-gray-800 rounded-lg"
+            class="bg-gray-500 px-4 py-2 text-white hover:bg-gray-600 rounded-lg"
           >
             取消
           </button>
           <button
             @click="submitQuiz"
-            class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-4 py-1.5 rounded text-white text-sm font-semibold shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] hover:shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-10px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] focus:shadow-[inset_-12px_-8px_40px_#46464620] transition-shadow"
+            class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-4 py-1.5 rounded text-white text-sm font-semibold hover:opacity-90"
           >
             确认交卷
           </button>
@@ -249,7 +244,7 @@ const confirmMultipleAnswer = () => {
 const nextQuestion = () => {
   if (isLastQuestion.value) {
     showConfirmSubmit.value = true;
-  } else if (currentQuestionIndex.value < totalQuestions.value - 1) {
+  } else {
     quizStore.nextQuestion();
   }
 };
@@ -262,7 +257,7 @@ const previousQuestion = () => {
 
 const getOptionClass = (option: string) => {
   if (!showAnswer.value) {
-    return 'hover:bg-gray-100 border border-gray-200';
+    return 'hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200';
   }
 
   const isSelected = selectedAnswer.value === option;
@@ -271,21 +266,21 @@ const getOptionClass = (option: string) => {
     : currentQuestion.value?.answer.includes(option);
 
   if (isSelected && isCorrect) {
-    return 'bg-green-100 border-green-500 border';
+    return 'bg-green-100 dark:bg-green-900/50 border-green-500 border text-gray-700 dark:text-gray-200';
   } else if (isSelected && !isCorrect) {
-    return 'bg-red-100 border-red-500 border';
+    return 'bg-red-100 dark:bg-red-900/50 border-red-500 border text-gray-700 dark:text-gray-200';
   } else if (!isSelected && isCorrect) {
-    return 'bg-green-100 border-green-500 border';
+    return 'bg-green-100 dark:bg-green-900/50 border-green-500 border text-gray-700 dark:text-gray-200';
   }
   
-  return 'border border-gray-200';
+  return 'border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200';
 };
 
 const getMultipleOptionClass = (option: string) => {
   if (!showAnswer.value) {
     return selectedAnswers.value.includes(option)
-      ? 'bg-blue-100 border-blue-500 border'
-      : 'hover:bg-gray-100 border border-gray-200';
+      ? 'bg-blue-100 dark:bg-blue-900/50 border-blue-500 border text-gray-700 dark:text-gray-200'
+      : 'hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200';
   }
 
   const isSelected = selectedAnswers.value.includes(option);
@@ -293,14 +288,14 @@ const getMultipleOptionClass = (option: string) => {
                    currentQuestion.value.answer.includes(option);
 
   if (isSelected && isCorrect) {
-    return 'bg-green-100 border-green-500 border';
+    return 'bg-green-100 dark:bg-green-900/50 border-green-500 border text-gray-700 dark:text-gray-200';
   } else if (isSelected && !isCorrect) {
-    return 'bg-red-100 border-red-500 border';
+    return 'bg-red-100 dark:bg-red-900/50 border-red-500 border text-gray-700 dark:text-gray-200';
   } else if (!isSelected && isCorrect) {
-    return 'bg-green-100 border-green-500 border';
+    return 'bg-green-100 dark:bg-green-900/50 border-green-500 border text-gray-700 dark:text-gray-200';
   }
   
-  return 'border border-gray-200';
+  return 'border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200';
 };
 
 const toggleMultipleOption = (option: string) => {

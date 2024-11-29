@@ -1,15 +1,15 @@
 <template>
   <div class="max-w-4xl mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-6">选择题库</h1>
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">选择题库</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         v-for="bank in quizBanks"
         :key="bank.title"
-        class="border rounded-lg p-4 cursor-pointer bg-gray-300 hover:bg-green-200"
+        class="border rounded-lg p-4 cursor-pointer bg-white dark:bg-gray-700 hover:bg-green-200 dark:hover:bg-green-700 transition-colors"
         @click="selectQuizBank(bank)"
       >
-        <h2 class="text-xl font-semibold">{{ bank.title }}</h2>
-        <p class="text-gray-600">题数: {{ bank.questions.length }}</p>
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">{{ bank.title }}</h2>
+        <p class="text-gray-600 dark:text-gray-300">题数: {{ bank.questions.length }}</p>
       </div>
     </div>
   </div>
