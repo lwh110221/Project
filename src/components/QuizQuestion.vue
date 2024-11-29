@@ -1,5 +1,11 @@
 <template>
   <div class="max-w-4xl mx-auto">
+    <div 
+      v-if="showNav"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40"
+      @click="showNav = false"
+    ></div>
+
     <div class="mb-1 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-3">
       <div class="relative">
         <div class="flex mb-2 items-center justify-between">
@@ -16,7 +22,7 @@
     </div>
 
     <div 
-      class="fixed right-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300"
+      class="fixed right-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 z-50"
       :class="showNav ? 'translate-x-0' : 'translate-x-full'"
       style="width: 300px;"
     >
