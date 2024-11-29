@@ -22,25 +22,29 @@
     </div>
 
     <div 
-      class="fixed right-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 z-50"
+      class="fixed right-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 z-50 flex flex-col"
       :class="showNav ? 'translate-x-0' : 'translate-x-full'"
       style="width: 300px;"
     >
-      <div class="p-4">
-        <div class="flex justify-between items-center mb-4">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex justify-between items-center">
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">题目导航</h3>
-          <button 
-            @click="showConfirmSubmit = true"
-            class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-2 py-1 rounded text-white text-sm font-semibold shadow-md hover:opacity-90"
-          >交卷</button>
-          <button @click="showNav = false" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-            <span class="sr-only">关闭</span>
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div class="flex items-center gap-2">
+            <button 
+              @click="showConfirmSubmit = true"
+              class="cursor-pointer bg-gradient-to-r from-[#EB3349] to-[#F45C43] px-2 py-1 rounded text-white text-sm font-semibold shadow-md hover:opacity-90"
+            >交卷</button>
+            <button @click="showNav = false" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+              <span class="sr-only">关闭</span>
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
-        
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
         <div class="grid grid-cols-5 gap-2">
           <button
             v-for="index in totalQuestions"
@@ -345,5 +349,29 @@ const submitQuiz = () => {
 .option-leave-to {
   opacity: 0;
   transform: translateY(20px);
+}
+
+/* 自定义滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.5);
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
 }
 </style>
