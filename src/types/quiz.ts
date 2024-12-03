@@ -7,6 +7,7 @@ export interface Question {
 
 export interface QuizBank {
   title: string;
+  category: string;
   questions: Question[];
 }
 
