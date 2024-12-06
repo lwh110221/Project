@@ -21,10 +21,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { useQuizStore } from '../stores/quizStore';
 
-const router = useRouter();
 const quizStore = useQuizStore();
 
 const score = computed(() => quizStore.score);
