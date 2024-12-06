@@ -1,7 +1,15 @@
 <template>
   <div class="max-w-4xl mx-auto p-4 custom-scrollbar">
     <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">选择题库</h1>
-    <div class="grid grid-cols-1 gap-6">
+    
+    <!-- 加载动画 -->
+    <div v-if="isLoading" class="flex flex-col items-center justify-center py-12">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-300 animate-pulse">正在加载题库...</p>
+    </div>
+
+    <!-- 题库列表 -->
+    <div v-else class="grid grid-cols-1 gap-6">
       <!-- 分类折叠面板 -->
       <div v-for="(banks, category) in categorizedBanks" :key="category">
         <div
@@ -52,19 +60,30 @@ import type { QuizBank } from '../types/quiz';
 
 const router = useRouter();
 const quizStore = useQuizStore();
+const expandedCategories = ref(new Set<string>());
+const isLoading = ref(true);
+
 const categorizedBanks = ref<Record<string, QuizBank[]>>({});
-const expandedCategories = ref<Set<string>>(new Set());
 
 onMounted(async () => {
-  const banks = await loadQuizBanks();
-  categorizedBanks.value = banks.reduce((acc, bank) => {
-    const category = bank.category || '未分类';
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(bank);
-    return acc;
-  }, {} as Record<string, QuizBank[]>);
+  try {
+    isLoading.value = true;
+    const banks = await loadQuizBanks();
+    const categorized: Record<string, QuizBank[]> = {};
+    
+    banks.forEach((bank: QuizBank) => {
+      if (!categorized[bank.category]) {
+        categorized[bank.category] = [];
+      }
+      categorized[bank.category].push(bank);
+    });
+    
+    categorizedBanks.value = categorized;
+  } catch (error) {
+    console.error('Failed to load quiz banks:', error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const toggleCategory = (category: string) => {
@@ -82,21 +101,6 @@ const selectQuizBank = (bank: QuizBank) => {
 </script>
 
 <style scoped>
-/* 应用到所有可滚动元素 */
-.custom-scrollbar,
-.grid {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.custom-scrollbar::-webkit-scrollbar,
-.grid::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-  width: 0;
-  height: 0;
-}
-
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -110,5 +114,23 @@ const selectQuizBank = (bank: QuizBank) => {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
 }
 </style>

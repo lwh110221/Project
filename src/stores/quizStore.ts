@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { QuizBank, Question, UserAnswer } from '../types/quiz';
+import type { QuizBank } from '../types/quiz';
 
 export const useQuizStore = defineStore('quiz', {
   state: () => ({
@@ -16,6 +16,7 @@ export const useQuizStore = defineStore('quiz', {
       this.currentQuizBank = bank;
       this.currentQuestionIndex = 0;
       this.userAnswers.clear();
+      this.markedQuestions.clear();
       this.score = 0;
       this.isComplete = false;
     },

@@ -7,9 +7,7 @@
       // 获取当前URL中的路径部分
       const segment = 1;
       const path = window.location.pathname;
-      const repo = '/prv-shuati'; // 你的仓库名称
-      
-      // 重定向到首页，同时保留路由信息
+      const repo = '/prv-shuati'; 
       window.location.replace(
         repo + '/?p=' + encodeURIComponent(path.slice(repo.length))
       );
