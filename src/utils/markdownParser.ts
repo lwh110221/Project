@@ -29,7 +29,7 @@ export function parseMarkdown(markdown: string): QuizBank {
             const options: string[] = [];
             
             for (const optLine of optionLines) {
-              if (optLine.match(/^[A-D]\./)) {
+              if (optLine.match(/^[A-Z]\./)) {
                 options.push(optLine.trim());
               } else if (optLine.includes('答案：')) {
                 if (currentSection === 'multiple') {
@@ -58,6 +58,7 @@ export function parseMarkdown(markdown: string): QuizBank {
 
   return {
     title: '题库',
+    category: '未分类',
     questions
   };
 }

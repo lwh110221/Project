@@ -118,7 +118,7 @@
             <div
               v-for="option in currentQuestion.options"
               :key="option"
-              @click="!showAnswer && toggleMultipleOption(option[0])"
+              @click="toggleMultipleOption(option[0])"
               class="p-4 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md"
               :class="[getMultipleOptionClass(option[0])]"
             >
@@ -336,6 +336,53 @@ const jumpToQuestion = (index: number) => {
 const submitQuiz = () => {
   showConfirmSubmit.value = false;
   router.push('/result');
+};
+
+// 修改解析题目内容的函数
+const parseQuestion = (content: string) => {
+  const lines = content.split('\n').map(line => line.trim()).filter(line => line);
+  const questionContent = lines[0];
+  
+  // 查找选项的起始和结束位置
+  let optionStartIndex = lines.findIndex(line => line.startsWith('A.'));
+  let answerIndex = lines.findIndex(line => line.startsWith('答案：'));
+  
+  if (optionStartIndex === -1 || answerIndex === -1) {
+    return null;
+  }
+
+  // 收集所有选项
+  const options = [];
+  let currentIndex = optionStartIndex;
+  
+  while (currentIndex < answerIndex) {
+    const line = lines[currentIndex];
+    if (line.match(/^[A-Z]\./)) {
+      options.push(line);
+    }
+    currentIndex++;
+  }
+
+  // 解析答案
+  const answerLine = lines[answerIndex];
+  const answer = answerLine.replace('答案：', '').split('').filter(char => char.match(/[A-Z]/));
+
+  // 确定题目类型
+  let type: 'single' | 'multiple' | 'boolean';
+  if (options.length === 2 && options.every(opt => opt.includes('正确') || opt.includes('错误'))) {
+    type = 'boolean';
+  } else if (answer.length > 1) {
+    type = 'multiple';
+  } else {
+    type = 'single';
+  }
+
+  return {
+    content: questionContent,
+    options,
+    answer,
+    type
+  };
 };
 </script>
 
