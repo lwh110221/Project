@@ -3,7 +3,7 @@
     <header class="bg-white dark:bg-gray-800 shadow-md">
       <div class="max-w-4xl mx-auto p-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-          小浩刷题系统
+          🌟小浩刷题系统
         </h1>
         <div class="flex items-center gap-4">
           <button 

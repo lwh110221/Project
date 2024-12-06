@@ -1,12 +1,14 @@
 # 自用刷题系统-小浩刷题系统
 ## 地址：https://lwh110221.github.io/prv-shuati/
+- 如果打不开或进入缓慢，请使用科学上网工具。
+- 如果你喜欢这个项目，请给个star🌟，谢谢🙏
 
 ## 简介：
 > 作者：Luowenhao
 
 > 邮箱：lwh110221@outlook.com
 
-> 一个自用的刷题系统，初衷是为了将自己的文档类型的题解析到系统中，方便随时随地刷题训练。使用Vue编写
+> 一个自用的刷题系统，初衷是为了将自己的文档类型的题解析到系统中，方便随时随地刷题训练。使用Vue+tailwindcss编写
 
 > 项目可解析markdown格式的题库到系统中。
 
@@ -63,8 +65,10 @@ F. [选项 F]
 
 你可以根据具体的知识点和需求，将相应的题目内容、选项、答案等填入这个模板中，以生成完整的题库或练习题。-- 注意：多选题的答案需要用选项组合，例如：ABD。
 
-# 不做任何商业用途，使用请注明来源。
+```
+
+# 不做任何商业用途，使用请注明来源
 
 ## 许可证
 本项目采用 [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/) 进行许可。版权所有 © 2024 luowenhao. 保留所有权利。
-```
+
