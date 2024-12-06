@@ -8,7 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/prv-shuati/assets/mm-kvVSEocr.png" />
     <title>🌟小浩刷题系统</title>
-    <script type="module" crossorigin src="/prv-shuati/assets/index-CNQuaLF5.js"></script>
+    <script>
+      // 处理GitHub Pages的路由重定向
+      (function() {
+        const redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+
+        // 处理来自404.html的重定向
+        const l = window.location;
+        if (l.search[1] === '/' ) {
+          const decoded = decodeURIComponent(l.search.slice(1).split('&')[0].split('=')[1]);
+          window.history.replaceState(null, null, decoded);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/prv-shuati/assets/index-BFkIFndw.js"></script>
     <link rel="stylesheet" crossorigin href="/prv-shuati/assets/index-_wRodIz4.css">
   </head>
   <body>
