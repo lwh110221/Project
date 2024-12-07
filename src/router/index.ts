@@ -22,7 +22,7 @@ const router = createRouter({
 });
 
 // 添加全局导航守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   // 如果路由无效，重定向到首页
   if (to.matched.length === 0) {
     next('/');
